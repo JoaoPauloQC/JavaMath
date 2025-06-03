@@ -1,111 +1,55 @@
 import java.io.Console;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.Random;
 import java.util.Scanner;
-import com.math.Math;
 
+import com.board.Board;
+import com.math.Math;
+import com.user.User;
+import com.Snake.Snake;
 public class PrimeiroPrograma {
 
     public static void main(String[] args){
-        var login = "Oi";
-        double num1 = -1;
-        System.out.println(Math.isNegative(num1));
-        int times = 8;
-        System.out.println("Digite um número");
-        Scanner scanner = new Scanner(System.in);
-        double input = scanner.nextDouble();
-        infinitesum(input, times , (getAndPrint(generate(0,1000))));
 
-    }
 
-    static void minhaInstrucao (){
-        System.out.println("Vindo de minha instrução");
-    }
+        String[][] tabuleiro = new String[5][5];
 
-    static void sum(double num1,double num2){
-        double result = num1 + num2;
-        if (result >= 0) {
-            System.out.println(result);
-        }
-        else{
-            System.out.println("A soma é negativa:" + result);
-        }
-    }
 
-    static void multiply(double num1, double num2){
-        if ((num1 * num2) > 0) {
-            System.out.println(num1 * num2);
-        }
-        else {
-            System.out.println("A multiplicação é negativa:" + (num1 * num2));
-        }
-    }
 
-    static void subtract(double num1 , double num2){
-        double result = num1 - num2;
-        if (result >= 0){
-            System.out.println(result);
-        }
-        else {
-            System.out.println("A subtração é negativa:" + result);
-        }
-    }
 
-    static void divide(double num1, double num2){
-        double result = num1 - num2;
-        if (result >= 0){
-            System.out.println(result);
-        }
-        else {
-            System.out.println("A subtração é negativa:" + result);
-        }
-    }
 
-    static void infinitesum(double num1, int times , double incrementer ){
-
-        int i = 0;
-        if(times < 0){
-            System.out.println("Can´t be negative");
-        }
-        else {
-            while (i < times) {
-                num1 += incrementer;
-                i++;
+        Board board = new Board(tabuleiro);
+        Snake snake = new Snake(board);
+        snake.direction = "right";
+        int incrementer = 0;
+        while (incrementer < 10 ) {
+            OffsetDateTime now = OffsetDateTime.now();
+            try {
+                Thread.sleep(1000); // Espera 1 segundo (1000 milissegundos)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                break;
             }
 
-            System.out.println(num1);
 
+
+            snake.setDirection((snake.getDirectionsList()[Math.generate(0,3)]));
+
+            snake.move();
+            board.drawBoard(snake.y, snake.x);
+            incrementer += 1;
         }
-    }
-
-    static void infinitesum(double num1, int times , double incrementer, double limiter ){
-
-        int i = 0;
-        if(times < 0){
-            System.out.println("Can´t be negative");
         }
-        else {
-            while (i < times) {
-                num1 += incrementer;
-                if ( num1 >= limiter ){
-                    break;
-                }
-                i++;
-            }
 
-            System.out.println(num1);
 
-        }
-    }
 
     static double getAndPrint(double wiw){
         System.out.println(wiw);
         return wiw;
     }
 
-    static double generate(double init, double limit){
-        Random generate = new Random();
-        double number = generate.nextDouble(init,limit);
-        return number;
-    }
+
 
 }
+
